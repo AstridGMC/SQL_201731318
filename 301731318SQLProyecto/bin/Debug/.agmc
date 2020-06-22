@@ -1,0 +1,9 @@
+CREAR TABLA Departamento ( Id_departamento entero, nombre cadena
+);
+
+INSERTAR EN Departamento VALORES (0,"Alta Verapaz"); 
+INSERTAR EN Departamento VALORES (1 ,"Baja Verapaz"); 
+INSERTAR EN Departamento VALORES(2 ,"Chimaltenango");
+INSERTAR EN Departamento VALORES(3 ,"Chiquimula");
+INSERTAR EN Departamento VALORES(4 ,"Petén");
+		

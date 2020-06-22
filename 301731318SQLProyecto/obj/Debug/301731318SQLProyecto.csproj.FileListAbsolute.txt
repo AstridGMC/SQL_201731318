@@ -1,0 +1,13 @@
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\bin\Debug\301731318SQLProyecto.exe.config
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\bin\Debug\301731318SQLProyecto.exe
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\bin\Debug\301731318SQLProyecto.pdb
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\301731318SQLProyecto.csprojAssemblyReference.cache
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\_301731318SQLProyecto.Properties.Resources.resources
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\301731318SQLProyecto.csproj.GenerateResource.cache
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\301731318SQLProyecto.csproj.CoreCompileInputs.cache
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\301731318SQLProyecto.exe
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\301731318SQLProyecto.pdb
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\_301731318SQLProyecto.Principal.resources
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\_301731318SQLProyecto.UserControl1.resources
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\_301731318SQLProyecto.Escritor.resources
+C:\Users\lenovo\source\repos\301731318SQLProyecto\301731318SQLProyecto\obj\Debug\_301731318SQLProyecto.Consultas.resources
