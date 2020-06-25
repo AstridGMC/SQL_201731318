@@ -1,30 +1,33 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _301731318SQLProyecto
+namespace _201731318SQLProyecto
 {
-    class Tabla
+    public class Tabla
     {
         List<Fila> filas;
         List<Dato> columnas;
         String nombre;
-        public List<Fila> Filas { 
+
+        public Tabla()
+        {
+            filas = new List<Fila>();
+            columnas = new List<Dato>();
+        }
+
+        public List<Fila> Filas
+        {
             get { return filas; }
             set { filas = value; }
         }
-        public List<Dato> Columnas {
+        public List<Dato> Columnas
+        {
             get { return columnas; }
             set { columnas = value; }
         }
-        public String Nombre {
+        public String Nombre
+        {
             get { return nombre; }
-            set { nombre = value; } 
+            set { nombre = value; }
         }
-
-
     }
 }

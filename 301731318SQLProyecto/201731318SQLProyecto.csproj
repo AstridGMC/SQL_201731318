@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\Arbol.cs" />
+    <Compile Include="Backend\Condicion.cs" />
     <Compile Include="Backend\Dato.cs" />
     <Compile Include="Backend\Fila.cs" />
+    <Compile Include="Backend\Graficador.cs" />
+    <Compile Include="Backend\Instruccion.cs" />
     <Compile Include="Backend\Nodo.cs" />
     <Compile Include="Backend\Parser y Scanner\AnalizadorLexico.cs" />
     <Compile Include="Backend\Parser y Scanner\AnalizadorSintactico.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Consultas.Designer.cs">
       <DependentUpon>Consultas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Backend\GeneradorHtml.cs" />
     <Compile Include="Principal.cs">
       <SubType>Form</SubType>
     </Compile>

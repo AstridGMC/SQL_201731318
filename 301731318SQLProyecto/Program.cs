@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _301731318SQLProyecto
+namespace _201731318SQLProyecto
 {
     static class Program
     {

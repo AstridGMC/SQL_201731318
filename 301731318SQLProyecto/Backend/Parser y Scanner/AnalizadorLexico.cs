@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
+namespace _201731318SQLProyecto.Backend.Parser_y_Scanner
 {
     class AnalizadorLexico
     {
@@ -14,7 +10,8 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
         public List<Token> errores;
         public List<Token> tokensAnalizar;
         public List<Token> tokensArchivo;
-        String texto="";
+
+        String texto = "";
         public AnalizadorLexico()
         {
         }
@@ -29,6 +26,11 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             get { return TokensAnalizar; }
             set { TokensAnalizar = value; }
         }
+        public List<Token> Errores
+        {
+            get { return errores; }
+            set { errores = value; }
+        }
         public List<Token> ObtenerTokens(String texto)
         {
             errores = new List<Token>();
@@ -36,13 +38,13 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             tokensAnalizar = new List<Token>();
             tokensArchivo = new List<Token>();
             String estadoActual = "s0";
-            String palabra="";
+            String palabra = "";
             Token token;
-            int columna = 0;
-            int fila = 0;
-            for (int i=0;i<texto.Length; i++ )
+            int columna = 1;
+            int fila = 1;
+            for (int i = 0; i < texto.Length; i++)
             {
-               
+
                 char letra = texto[i];
                 //Console.WriteLine("\n.ii.." + letra + ".. " + estadoActual);
                 palabra = palabra + letra;
@@ -52,22 +54,22 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                 {
                     token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                     token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
-                   
+
                     if (token.IsPalabraReservada1(palabra.Trim()))
                     {
                         token.Tipo = "PalabraReservada1";
-                        token.Token1 = 0;
+                        token.Token1 = token.NumerarPalabraReservada1(token.Lexema);
                     }
                     else if (token.IsPalabraReservada2(palabra.Trim()))
                     {
                         token.Tipo = "palabraReservada2";
-                        token.Token1 = 0;
+                        token.Token1 = token.NumerarPalabraReservada1(token.Lexema);
                     }
-                    if ("error".Equals(estadoActual) || (" Error".Equals(estadoActual) && letra != '\n'))
+                    if ("error".Equals(estadoActual) || ("Error".Equals(estadoActual)) || token.Lexema == "Error")
                     {
                         errores.Add(token);
                     }
-                    else
+                    else if (token.Lexema != "Error")
                     {
                         token.Color = token.ColorearToken(token.Tipo);
                         tokensArchivo.Add(token);
@@ -78,15 +80,16 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                 }
                 else
                 {
-                    if (estadoActual == "s1" &&( !Char.IsLetter(texto[i+1])&& texto[i + 1] !='_'))
+                    if (estadoActual == "s1" && (!Char.IsLetter(texto[i + 1]) && texto[i + 1] != '_'))
                     {
                         letra = texto[i + 1];
                         //Console.WriteLine("cambiando char " + letra);
                         //i++;
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
-                        
-                        if (token.IsPalabraReservada1(palabra.Trim())){
+
+                        if (token.IsPalabraReservada1(palabra.Trim()))
+                        {
                             token.Tipo = "PalabraReservada1";
                             token.Token1 = token.NumerarPalabraReservada1(token.Lexema);
                         }
@@ -94,7 +97,8 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         {
                             token.Tipo = "palabraReservada2";
                             token.Token1 = token.NumerarPalabraReservada2(token.Lexema);
-                        }else if (token.isTipoDato(palabra.Trim()))
+                        }
+                        else if (token.isTipoDato(palabra.Trim()))
                         {
                             token.Tipo = "palabraReservada3";
                             token.Token1 = token.NumerarTipoDato(token.Lexema);
@@ -107,9 +111,10 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                         //Console.WriteLine("agrego estado s1......."+ estadoActual);
-                        
+
                     }
-                    else if (estadoActual=="s13" && letra == '\n') { 
+                    else if (estadoActual == "s13" && letra == '\n')
+                    {
                         token = new Token(palabra.Trim().Replace(palabra.Substring(palabra.Length), ""), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
                         tokens.Add(token);
@@ -117,11 +122,11 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         estadoActual = "s0";
                         palabra = "";
                         columna++;
-                    
+
                     }
-                    else if (estadoActual == "s3" && !Char.IsDigit(texto[i+1]))
+                    else if (estadoActual == "s3" && !Char.IsDigit(texto[i + 1]))
                     {
-                        token = new Token(palabra.Trim() , NombrarEstados(estadoActual), columna, fila);
+                        token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
                         token.Color = token.ColorearToken(token.Tipo);
                         tokens.Add(token);
@@ -131,9 +136,9 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual=="s21"&& (letra == ' '|| letra == '\n'))
+                    else if (estadoActual == "s21" && (letra == ' ' || letra == '\n'))
                     {
-                        token = new Token(palabra.Trim() , NombrarEstados(estadoActual), columna, fila);
+                        token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
                         token.Color = token.ColorearToken(token.Tipo);
                         tokens.Add(token);
@@ -191,9 +196,9 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual == "s8" && texto[i+1]!='=')
+                    else if (estadoActual == "s8" && texto[i + 1] != '=')
                     {
-                        Console.WriteLine("entrando s9 ....." + texto[i + 1]  + "....");
+                        Console.WriteLine("entrando s9 ....." + texto[i + 1] + "....");
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
                         token.Color = token.ColorearToken(token.Tipo);
@@ -206,7 +211,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     }
                     else if (estadoActual == "s9" && texto[i + 1] != '=')
                     {
-                        Console.WriteLine("entrando s9 ....."+ texto[i + 1] +"....");
+                        Console.WriteLine("entrando s9 ....." + texto[i + 1] + "....");
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
                         token.Color = token.ColorearToken(token.Tipo);
@@ -265,7 +270,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual == "s12"|| estadoActual == "s36")
+                    else if (estadoActual == "s12" || estadoActual == "s36")
                     {
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
@@ -277,7 +282,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual == "s21"&& !Char.IsDigit(texto[i+1]))
+                    else if (estadoActual == "s21" && !Char.IsDigit(texto[i + 1]))
                     {
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
@@ -289,7 +294,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual == "s35"|| estadoActual == "s36" || estadoActual == "s37" || estadoActual == "s38")
+                    else if (estadoActual == "s35" || estadoActual == "s36" || estadoActual == "s37" || estadoActual == "s38")
                     {
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
@@ -301,7 +306,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         palabra = "";
                         columna++;
                     }
-                    else if (estadoActual == "error"&&texto[i+1]==' ')
+                    else if (estadoActual == "error" && texto[i + 1] == ' ')
                     {
                         token = new Token(palabra.Trim(), NombrarEstados(estadoActual), columna, fila);
                         token.Token1 = token.NombrarToken(NombrarEstados(estadoActual));
@@ -313,7 +318,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         columna++;
                     }
                 }
-                
+
                 if (letra == '\n')
                 {
                     token = new Token("\n", null, 0, 0);
@@ -322,7 +327,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     columna = 0;
                     fila++;
                 }
-                else if(letra == ' ')
+                else if (letra == ' ')
                 {
                     token = new Token(" ", null, 0, 0);
                     token.Color = Color.Black;
@@ -330,7 +335,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                 }
 
             }
-            Console.Out.WriteLine("tam de arreglo arch 1" + tokens.Count );
+            Console.Out.WriteLine("tam de arreglo arch 1" + tokens.Count);
             Console.Out.WriteLine("tam de errores lexicos " + errores.Count);
             return tokens;
         }
@@ -345,43 +350,43 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         //Console.WriteLine(".......pasandos1 ...."+charA+"........");
                         return "s1";
                     }
-                    else if(Char.IsDigit(charA))
+                    else if (Char.IsDigit(charA))
                     {
                         return "s3";
                     }
-                    else if (charA=='-')
+                    else if (charA == '-')
                     {
                         return "s2";
                     }
-                    else if (charA=='/')
+                    else if (charA == '/')
                     {
                         return "s4";
                     }
-                    else if (charA=='(')
+                    else if (charA == '(')
                     {
                         return "s5";
                     }
-                    else if (charA==')')
+                    else if (charA == ')')
                     {
                         return "s6";
                     }
-                   /* else if (charA=='=')
-                    {
-                        return "s7";
-                    }*/
-                    else if (charA=='=')
+                    /* else if (charA=='=')
+                     {
+                         return "s7";
+                     }*/
+                    else if (charA == '=')
                     {
                         return "s7";
                     }
-                    else if (charA=='<')
+                    else if (charA == '<')
                     {
                         return "s8";
                     }
-                    else if (charA=='>')
+                    else if (charA == '>')
                     {
                         return "s9";
                     }
-                    else if (charA=='!')
+                    else if (charA == '!')
                     {
                         return "s10";
                     }
@@ -393,11 +398,11 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     {
                         return "s12";
                     }
-                    else if (charA.ToString().Equals("'")|| charA.ToString().Equals("‘"))
+                    else if (charA.ToString().Equals("'") || charA.ToString().Equals("‘"))
                     {
                         return "s23";
                     }
-                    else if (charA == '"'|| charA == '”')
+                    else if (charA == '"' || charA == '”')
                     {
                         return "s22";
                     }
@@ -435,11 +440,12 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     if (Char.IsDigit(charA))
                     {
                         return "s1";
-                    }else if (Char.IsLetter(charA))
+                    }
+                    else if (Char.IsLetter(charA))
                     {
                         return "s1";
                     }
-                    else if (charA=='_')
+                    else if (charA == '_')
                     {
                         return "s1";
                     }
@@ -455,18 +461,22 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     if (charA == '-')
                     {
                         return "s13";
-                    } else {
+                    }
+                    else
+                    {
                         return "error";
                     }
-                    
+
                 case "s3":
                     if (Char.IsDigit(charA))
                     {
                         return "s3";
-                    }else if (charA == '.')
+                    }
+                    else if (charA == '.')
                     {
                         return "s14";
-                    }else if (charA==' '|| charA == '\n')
+                    }
+                    else if (charA == ' ' || charA == '\n')
                     {
                         return "s3";
                     }
@@ -478,7 +488,8 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                     if (charA == '*')
                     {
                         return "s15";
-                    }else
+                    }
+                    else
                     {
                         return "error";
                     }
@@ -630,7 +641,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         return "error";
                     }
                 case "s26":
-                    if (charA=='/')
+                    if (charA == '/')
                     {
                         return "s27";
                     }
@@ -665,7 +676,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
                         return "error";
                     }
                 case "s29":
-                    if (charA=='/')
+                    if (charA == '/')
                     {
                         return "s30";
                     }
@@ -784,7 +795,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             }
             else if (actual == "s19")
             {
-                return "MayorIgual" ;
+                return "MayorIgual";
             }
             else if (actual == "s20")
             {
@@ -820,5 +831,5 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             }
         }
     }
-   
+
 }

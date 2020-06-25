@@ -1,17 +1,14 @@
-﻿using System;
+﻿using _201731318SQLProyecto.Backend;
+using _201731318SQLProyecto.Backend.Parser_y_Scanner;
+using _301731318SQLProyecto;
+using _301731318SQLProyecto.Backend;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.IO;
-using _301731318SQLProyecto.Backend.Parser_y_Scanner;
+using System.Linq;
+using System.Windows.Forms;
 
-namespace _301731318SQLProyecto
+namespace _201731318SQLProyecto
 {
     public partial class Principal : Form
     {
@@ -19,7 +16,11 @@ namespace _301731318SQLProyecto
         String textoAnalizar;
         String PathTextoConsultas;
         List<Token> tokens;
-        List<Token>  tokensAnalizar;
+        List<Token> tokensAnalizar;
+        List<Token> errores;
+        List<ErrorSintactico> erroresSintacticos;
+        List<Tabla> tablas = new List<Tabla>();
+        Graficador graficador = new Graficador();
         public Principal()
         {
             InitializeComponent();
@@ -27,12 +28,14 @@ namespace _301731318SQLProyecto
 
         private void mOSTRARTOKENToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            GeneradorHtml generador = new GeneradorHtml();
+            generador.GenerarHtmlTablas(tokensAnalizar, errores);
         }
 
         private void aCERCADEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            string text = "Vercion 1.0 \n  \n Nombre: Astrid Gabriela Martinez Castillo \n Carnet: 201731318";
+            MessageBox.Show(text);
         }
 
         private void mANUALDEUSUARIOToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,7 +97,7 @@ namespace _301731318SQLProyecto
         Escritor escritorsql;
         private void nUEVOToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (escritorsql !=null)
+            if (escritorsql != null)
             {
                 DialogResult opcion = MessageBox.Show("desea guardar los cambios realizados en el archivo?", "ALERTA", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (opcion == DialogResult.Yes)
@@ -117,17 +120,25 @@ namespace _301731318SQLProyecto
                 escritorsql = new Escritor();
                 AgregarPanel(escritorsql);
             }
-            
-            
-            
+
+
+
         }
 
         private void cARGARTABLASToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog abreArchivo = new OpenFileDialog();
             abreArchivo.Filter = "text|*.sqle";
-            string path = abreArchivo.FileName;
-
+            if (abreArchivo.ShowDialog() == DialogResult.OK)
+            {
+                string path = abreArchivo.FileName;
+                TextReader lector = new StreamReader(abreArchivo.FileName);
+                PathTextoConsultas = abreArchivo.FileName;
+                textoAnalizar = lector.ReadToEnd();
+                escritorsql = new Escritor(textoAnalizar);
+                AgregarPanel(escritorsql);
+                lector.Close();
+            }
         }
 
         private void aBRIRToolStripMenuItem_Click(object sender, EventArgs e)
@@ -148,7 +159,19 @@ namespace _301731318SQLProyecto
 
         private void vERTABLASToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (tablas != null)
+            {
+                if (tablas.Count > 0)
+                {
+                    GeneradorHtml generador = new GeneradorHtml();
+                    String tablashtml = generador.GenerarReporteTablas(tablas);
+                    generador.generarHTML(tablashtml, "tablas.html");
+                }
+                else
+                {
+                    MessageBox.Show("No Cuenta Con Tablas Cargadas en este momento");
+                }
+            }
         }
 
         private void gUARDARCOMOToolStripMenuItem_Click(object sender, EventArgs e)
@@ -157,11 +180,11 @@ namespace _301731318SQLProyecto
             saveFileDialog1.Filter = "sql| *.sqle |agmc | *.agmc";
             saveFileDialog1.Title = "GUARDAR COMO";
             saveFileDialog1.ShowDialog();
-            if (saveFileDialog1.FileName.Length>0)
+            if (saveFileDialog1.FileName.Length > 0)
             {
-               
+
                 TextWriter escribir = new StreamWriter(saveFileDialog1.FileName);
-                Console.WriteLine(escritorsql.TEXTO() + "liiiiii" );
+                Console.WriteLine(escritorsql.TEXTO() + "liiiiii");
                 escribir.Write(escritorsql.TEXTO());
                 escritorsql = new Escritor();
                 AgregarPanel(escritorsql);
@@ -178,33 +201,64 @@ namespace _301731318SQLProyecto
         {
             try
             {
-                if (escritorsql.TEXTO()!=null)
+
+                if (escritorsql.TEXTO() != null)
                 {
+                    String miText = escritorsql.TEXTO();
+                    if (escritorsql.TEXTOSELECCIONADO().Length > 0)
+                    {
+                        miText = escritorsql.TEXTOSELECCIONADO();
+                    }
                     AnalizadorLexico lexico = new AnalizadorLexico();
                     //AnalizadorSintactico sintaxis = new AnalizadorSintactico();
-                    tokens = lexico.ObtenerTokens(escritorsql.TEXTO());
+                    tokens = lexico.ObtenerTokens(miText);
                     tokensAnalizar = lexico.tokensAnalizar;
-                    Console.WriteLine("\n tama;o de tokens analizar "+ tokensAnalizar.Count);
-                   
-                    
+                    errores = lexico.Errores;
+                    Console.WriteLine("\n tama;o de tokens analizar " + tokensAnalizar.Count);
+                    if (errores.Count() > 0)
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = false;
+                    }
+                    else
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = true;
+                    }
+
                     for (int i = 0; i < tokens.Count(); i++)
                     {
                         Token miToken = tokens[i];
-                        Console.WriteLine("Lexema: " + miToken.Lexema +" Token: "+miToken.Token1+ " Tipo: " + miToken.Tipo + "  Color" + miToken.Color + "  Fila" + miToken.Fila + "  Columna" + miToken.Columna);
+                        Console.WriteLine("Lexema: " + miToken.Lexema + " Token: " + miToken.Token1 + " Tipo: " + miToken.Tipo + "  Color" + miToken.Color + "  Fila" + miToken.Fila + "  Columna" + miToken.Columna);
                     }
-                    Console.WriteLine("\n ========iniciando analizador sintactico=============" );
-                   
+                    Console.WriteLine("\n ========iniciando analizador sintactico=============");
+                    AnalizadorSintactico sintactico = new AnalizadorSintactico(tokensAnalizar);
+                    sintactico.Tablas = tablas;
+                    sintactico.analizar();
+                    erroresSintacticos = sintactico.Errores;
+                    escritorsql.InsertarErrores(erroresSintacticos);
+                    Arbol arbol = new Arbol();
+                    arbol.ImprimirNodos(sintactico.Principal, 1);
+
+                    graficador.Raiz = sintactico.Principal;
+                    // tokensAnalizar.Clear();
                     escritorsql.InsertarTexto(lexico.TokensArchivo);
-                   // tokensAnalizar.Clear();
-                    
+                    if (erroresSintacticos.Count > 0 || errores.Count > 0)
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = false;
+                        bntArbol.Enabled = false;
+                    }
+                    else
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = true;
+                        bntArbol.Enabled = true;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Debe Cargar un archivo primero");
+                Console.WriteLine(ex);
             }
-            AnalizadorSintactico sintactico = new AnalizadorSintactico(tokensAnalizar);
-            sintactico.analizar();
+
 
         }
 
@@ -220,12 +274,97 @@ namespace _301731318SQLProyecto
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
-           
-            
+
+
         }
 
-        
+        private void mOSTRARERRORESToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (erroresSintacticos != null && errores != null)
+            {
+                GeneradorHtml generador = new GeneradorHtml();
+                String erroreshtml = generador.EscribirErroresSintacticosHtml(errores, erroresSintacticos);
+                generador.generarTablasErroresHTML(erroreshtml);
+            }
+        }
+
+        private void mANUALTECNICOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String manualtec = "/ManualTecnicoSQL.pdf";
+            GeneradorHtml generador = new GeneradorHtml();
+            generador.abirPDF(manualtec);
+        }
+
+        private void eJECUTARToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (escritorsql.TEXTO() != null)
+                {
+                    String miText = escritorsql.TEXTO();
+                    if (escritorsql.TEXTOSELECCIONADO().Length > 0)
+                    {
+                        miText = escritorsql.TEXTOSELECCIONADO();
+                    }
+                    AnalizadorLexico lexico = new AnalizadorLexico();
+                    //AnalizadorSintactico sintaxis = new AnalizadorSintactico();
+                    tokens = lexico.ObtenerTokens(miText);
+                    tokensAnalizar = lexico.tokensAnalizar;
+                    errores = lexico.Errores;
+                    Console.WriteLine("\n tama;o de tokens analizar " + tokensAnalizar.Count);
+                    if (errores.Count() > 0)
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = false;
+                    }
+                    else
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = true;
+                    }
+
+                    for (int i = 0; i < tokens.Count(); i++)
+                    {
+                        Token miToken = tokens[i];
+                        Console.WriteLine("Lexema: " + miToken.Lexema + " Token: " + miToken.Token1 + " Tipo: " + miToken.Tipo + "  Color" + miToken.Color + "  Fila" + miToken.Fila + "  Columna" + miToken.Columna);
+                    }
+                    Console.WriteLine("\n ========iniciando analizador sintactico=============");
+                    AnalizadorSintactico sintactico = new AnalizadorSintactico(tokensAnalizar);
+                    sintactico.Tablas = tablas;
+                    sintactico.analizar();
+                    erroresSintacticos = sintactico.Errores;
+                    escritorsql.InsertarErrores(erroresSintacticos);
+                    Arbol arbol = new Arbol();
+                    arbol.ImprimirNodos(sintactico.Principal, 1);
+                    // tokensAnalizar.Clear();
+                    escritorsql.InsertarTexto(lexico.TokensArchivo);
+                    graficador.Raiz = sintactico.Principal;
+                    if (erroresSintacticos.Count > 0 || errores.Count > 0)
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = false;
+                        bntArbol.Enabled = false;
+                    }
+                    else
+                    {
+                        vERTABLASToolStripMenuItem.Enabled = true;
+                        bntArbol.Enabled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Debe Cargar un archivo primero");
+                Console.WriteLine(ex);
+            }
+
+        }
+
+        private void bntArbol_Click(object sender, EventArgs e)
+        {
+            graficador.GenerarGrafica(graficador.Raiz);
+        }
     }
 }
+
+

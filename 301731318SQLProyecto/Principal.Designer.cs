@@ -1,4 +1,4 @@
-﻿namespace _301731318SQLProyecto
+﻿namespace _201731318SQLProyecto
 {
     partial class Principal
     {
@@ -46,7 +46,7 @@
             this.cARGARTABLASToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vERTABLASToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mOSTRARTOKENToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bntArbol = new System.Windows.Forms.ToolStripMenuItem();
             this.mOSTRARERRORESToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aYUDAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mANUALDEUSUARIOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +143,7 @@
             this.cARGARTABLASToolStripMenuItem,
             this.vERTABLASToolStripMenuItem,
             this.mOSTRARTOKENToolStripMenuItem,
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem,
+            this.bntArbol,
             this.mOSTRARERRORESToolStripMenuItem});
             this.hERRAMIENTASToolStripMenuItem.Font = new System.Drawing.Font("Arial Rounded MT Bold", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hERRAMIENTASToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -158,6 +158,7 @@
             this.eJECUTARToolStripMenuItem.Name = "eJECUTARToolStripMenuItem";
             this.eJECUTARToolStripMenuItem.Size = new System.Drawing.Size(411, 26);
             this.eJECUTARToolStripMenuItem.Text = "EJECUTAR";
+            this.eJECUTARToolStripMenuItem.Click += new System.EventHandler(this.eJECUTARToolStripMenuItem_Click);
             // 
             // cARGARTABLASToolStripMenuItem
             // 
@@ -183,12 +184,13 @@
             this.mOSTRARTOKENToolStripMenuItem.Text = "MOSTRAR TOKEN";
             this.mOSTRARTOKENToolStripMenuItem.Click += new System.EventHandler(this.mOSTRARTOKENToolStripMenuItem_Click);
             // 
-            // mOSTRARARBOLDEDERIVACIONToolStripMenuItem
+            // bntArbol
             // 
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("mOSTRARARBOLDEDERIVACIONToolStripMenuItem.Image")));
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem.Name = "mOSTRARARBOLDEDERIVACIONToolStripMenuItem";
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem.Size = new System.Drawing.Size(411, 26);
-            this.mOSTRARARBOLDEDERIVACIONToolStripMenuItem.Text = "MOSTRAR ARBOL DE DERIVACION";
+            this.bntArbol.Image = ((System.Drawing.Image)(resources.GetObject("bntArbol.Image")));
+            this.bntArbol.Name = "bntArbol";
+            this.bntArbol.Size = new System.Drawing.Size(411, 26);
+            this.bntArbol.Text = "MOSTRAR ARBOL DE DERIVACION";
+            this.bntArbol.Click += new System.EventHandler(this.bntArbol_Click);
             // 
             // mOSTRARERRORESToolStripMenuItem
             // 
@@ -196,6 +198,7 @@
             this.mOSTRARERRORESToolStripMenuItem.Name = "mOSTRARERRORESToolStripMenuItem";
             this.mOSTRARERRORESToolStripMenuItem.Size = new System.Drawing.Size(411, 26);
             this.mOSTRARERRORESToolStripMenuItem.Text = "MOSTRAR ERRORES";
+            this.mOSTRARERRORESToolStripMenuItem.Click += new System.EventHandler(this.mOSTRARERRORESToolStripMenuItem_Click);
             // 
             // aYUDAToolStripMenuItem
             // 
@@ -230,6 +233,7 @@
             this.mANUALTECNICOToolStripMenuItem.Name = "mANUALTECNICOToolStripMenuItem";
             this.mANUALTECNICOToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
             this.mANUALTECNICOToolStripMenuItem.Text = "MANUAL TECNICO ";
+            this.mANUALTECNICOToolStripMenuItem.Click += new System.EventHandler(this.mANUALTECNICOToolStripMenuItem_Click);
             // 
             // aCERCADEToolStripMenuItem
             // 
@@ -287,7 +291,7 @@
         private System.Windows.Forms.ToolStripMenuItem cARGARTABLASToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vERTABLASToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mOSTRARTOKENToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mOSTRARARBOLDEDERIVACIONToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bntArbol;
         private System.Windows.Forms.ToolStripMenuItem mOSTRARERRORESToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aYUDAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mANUALDEUSUARIOToolStripMenuItem;

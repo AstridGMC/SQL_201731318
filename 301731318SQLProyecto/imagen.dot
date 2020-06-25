@@ -1,0 +1,283 @@
+digraph {
+  edge[dir = none];
+ graph[ordering = "out"]; 
+node [shape = circle, style="filled",fillcolor="lightskyblue", fontcolor= "black"];
+ node1  [label= "S" ];  
+ 
+ node2  [label= "INICIO" ];  
+ 
+ node3  [label= "CREAR" ];  
+ 
+ node4  [label= "TABLA" ];  
+ 
+ node5  [label= "Departamento" ];  
+ 
+ node6  [label= "(" ];  
+ 
+ node9  [label= "Id_departamento" ];  
+ 
+ node7  [label= "TIPOCAMPOID" ];  
+ 
+ node8  [label= "entero" ];  
+ 
+ node10  [label= "CUERPOCREAR" ];  
+ 
+ node11  [label= "," ];  
+ 
+ node14  [label= "nombre" ];  
+ 
+ node12  [label= "TIPOCAMPOID" ];  
+ 
+ node13  [label= "cadena" ];  
+ 
+ node15  [label= "CUERPOCREAR" ];  
+ 
+ node16  [label= "epsilon" ];  
+ 
+ node17  [label= ")" ];  
+ 
+ node18  [label= ";" ];  
+ 
+ node19  [label= "INICIO" ];  
+ 
+ node20  [label= "INSERTAR" ];  
+ 
+ node22  [label= "Departamento" ];  
+ 
+ node23  [label= "VALORES" ];  
+ 
+ node24  [label= "(" ];  
+ 
+ node25  [label= "DATO" ];  
+ 
+ node26  [label= "0" ];  
+ 
+ node21  [label= "EN" ];  
+ 
+ node27  [label= "CuerpoDatos" ];  
+ 
+ node28  [label= "," ];  
+ 
+ node29  [label= "DATO" ];  
+ 
+ node30  [label= " Alta Verapaz " ];  
+ 
+ node31  [label= "CuerpoDatos" ];  
+ 
+ node32  [label= "epsilon" ];  
+ 
+ node33  [label= ")" ];  
+ 
+ node35  [label= "INICIO" ];  
+ 
+ node36  [label= "INSERTAR" ];  
+ 
+ node38  [label= "Departamento" ];  
+ 
+ node39  [label= "VALORES" ];  
+ 
+ node40  [label= "(" ];  
+ 
+ node41  [label= "DATO" ];  
+ 
+ node42  [label= "1" ];  
+ 
+ node37  [label= "EN" ];  
+ 
+ node43  [label= "CuerpoDatos" ];  
+ 
+ node44  [label= "," ];  
+ 
+ node45  [label= "DATO" ];  
+ 
+ node46  [label= " Baja Verapaz " ];  
+ 
+ node47  [label= "CuerpoDatos" ];  
+ 
+ node48  [label= "epsilon" ];  
+ 
+ node49  [label= ")" ];  
+ 
+ node51  [label= "INICIO" ];  
+ 
+ node52  [label= "INSERTAR" ];  
+ 
+ node54  [label= "Departamento" ];  
+ 
+ node55  [label= "VALORES" ];  
+ 
+ node56  [label= "(" ];  
+ 
+ node57  [label= "DATO" ];  
+ 
+ node58  [label= "2" ];  
+ 
+ node53  [label= "EN" ];  
+ 
+ node59  [label= "CuerpoDatos" ];  
+ 
+ node60  [label= "," ];  
+ 
+ node61  [label= "DATO" ];  
+ 
+ node62  [label= " Chimaltenango " ];  
+ 
+ node63  [label= "CuerpoDatos" ];  
+ 
+ node64  [label= "epsilon" ];  
+ 
+ node65  [label= ")" ];  
+ 
+ node67  [label= "INICIO" ];  
+ 
+ node68  [label= "INSERTAR" ];  
+ 
+ node70  [label= "Departamento" ];  
+ 
+ node71  [label= "VALORES" ];  
+ 
+ node72  [label= "(" ];  
+ 
+ node73  [label= "DATO" ];  
+ 
+ node74  [label= "3" ];  
+ 
+ node69  [label= "EN" ];  
+ 
+ node75  [label= "CuerpoDatos" ];  
+ 
+ node76  [label= "," ];  
+ 
+ node77  [label= "DATO" ];  
+ 
+ node78  [label= " Chiquimula " ];  
+ 
+ node79  [label= "CuerpoDatos" ];  
+ 
+ node80  [label= "epsilon" ];  
+ 
+ node81  [label= ")" ];  
+ 
+ node83  [label= "INICIO" ];  
+ 
+ node84  [label= "INSERTAR" ];  
+ 
+ node86  [label= "Departamento" ];  
+ 
+ node87  [label= "VALORES" ];  
+ 
+ node88  [label= "(" ];  
+ 
+ node89  [label= "DATO" ];  
+ 
+ node90  [label= "4" ];  
+ 
+ node85  [label= "EN" ];  
+ 
+ node91  [label= "CuerpoDatos" ];  
+ 
+ node92  [label= "," ];  
+ 
+ node93  [label= "DATO" ];  
+ 
+ node94  [label= " Petén " ];  
+ 
+ node95  [label= "CuerpoDatos" ];  
+ 
+ node96  [label= "epsilon" ];  
+ 
+ node97  [label= ")" ];  
+ node1 -> node2; 
+ node2 -> node3; 
+ node2 -> node4; 
+ node2 -> node5; 
+ node2 -> node6; 
+ node2 -> node9; 
+ node2 -> node7; 
+ node7 -> node8; 
+ node2 -> node10; 
+ node10 -> node11; 
+ node10 -> node14; 
+ node10 -> node12; 
+ node12 -> node13; 
+ node10 -> node15; 
+ node15 -> node16; 
+ node2 -> node17; 
+ node2 -> node18; 
+ node2 -> node19; 
+ node19 -> node20; 
+ node19 -> node22; 
+ node19 -> node23; 
+ node19 -> node24; 
+ node19 -> node25; 
+ node25 -> node26; 
+ node19 -> node21; 
+ node19 -> node27; 
+ node27 -> node28; 
+ node27 -> node29; 
+ node29 -> node30; 
+ node27 -> node31; 
+ node31 -> node32; 
+ node19 -> node33; 
+ node19 -> node35; 
+ node35 -> node36; 
+ node35 -> node38; 
+ node35 -> node39; 
+ node35 -> node40; 
+ node35 -> node41; 
+ node41 -> node42; 
+ node35 -> node37; 
+ node35 -> node43; 
+ node43 -> node44; 
+ node43 -> node45; 
+ node45 -> node46; 
+ node43 -> node47; 
+ node47 -> node48; 
+ node35 -> node49; 
+ node35 -> node51; 
+ node51 -> node52; 
+ node51 -> node54; 
+ node51 -> node55; 
+ node51 -> node56; 
+ node51 -> node57; 
+ node57 -> node58; 
+ node51 -> node53; 
+ node51 -> node59; 
+ node59 -> node60; 
+ node59 -> node61; 
+ node61 -> node62; 
+ node59 -> node63; 
+ node63 -> node64; 
+ node51 -> node65; 
+ node51 -> node67; 
+ node67 -> node68; 
+ node67 -> node70; 
+ node67 -> node71; 
+ node67 -> node72; 
+ node67 -> node73; 
+ node73 -> node74; 
+ node67 -> node69; 
+ node67 -> node75; 
+ node75 -> node76; 
+ node75 -> node77; 
+ node77 -> node78; 
+ node75 -> node79; 
+ node79 -> node80; 
+ node67 -> node81; 
+ node67 -> node83; 
+ node83 -> node84; 
+ node83 -> node86; 
+ node83 -> node87; 
+ node83 -> node88; 
+ node83 -> node89; 
+ node89 -> node90; 
+ node83 -> node85; 
+ node83 -> node91; 
+ node91 -> node92; 
+ node91 -> node93; 
+ node93 -> node94; 
+ node91 -> node95; 
+ node95 -> node96; 
+ node83 -> node97; 
+    rankdir = UD; 
+}  

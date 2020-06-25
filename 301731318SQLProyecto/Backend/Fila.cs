@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace _301731318SQLProyecto
+namespace _201731318SQLProyecto
 {
-    class Fila
+    public class Fila
     {
 
-        List<Dato> fila { get; set; }
+        List<Dato> fila;
+        public List<Dato> Fila1 { get { return fila; } set { fila = value; } }
 
 
     }

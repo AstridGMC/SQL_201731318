@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace _301731318SQLProyecto
+namespace _201731318SQLProyecto
 {
-    class Dato
+    public class Dato
     {
         private String dato;
         private String tipo;
-        public String Dato1 {
+        private String columna;
+        public String Dato1
+        {
             get { return dato; }
             set { dato = value; }
         }
-        public String Tipo {
+        public String Tipo
+        {
             get { return tipo; }
             set { tipo = value; }
         }
-
-
+        public String Columna
+        {
+            get { return columna; }
+            set { columna = value; }
+        }
     }
 }

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Navigation;
 
-namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
+namespace _201731318SQLProyecto.Backend.Parser_y_Scanner
 {
     public class Token
     {
@@ -38,13 +31,16 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             if (estado == "Identificador")
             {
                 return 1;
-            } else if (estado == "Comentario de Una Linea")
+            }
+            else if (estado == "Comentario de Una Linea")
             {
                 return 2;
-            } else if (estado == "Comentario Multilinea")
+            }
+            else if (estado == "Comentario Multilinea")
             {
                 return 3;
-            } else if (estado == "Decimal")
+            }
+            else if (estado == "Decimal")
             {
                 return 4;
             }
@@ -241,7 +237,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
         }
         public bool IsPalabraReservada2(string palabra)
         {
-            
+
             if (palabra.ToLower() == "establecer")
             {
                 return true;
@@ -303,7 +299,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             }
             else if (palabra.ToLower() == "en")
             {
-                return 31;
+                return 33;
             }
             else if (palabra.ToLower() == "valores")
             {
@@ -324,7 +320,7 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             }
         }
 
-        public Boolean  isTipoDato(String token)
+        public Boolean isTipoDato(String token)
         {
             String miToken = token.ToLower();
             switch (miToken)
@@ -341,19 +337,19 @@ namespace _301731318SQLProyecto.Backend.Parser_y_Scanner
             return false;
         }
 
-        public int  NumerarTipoDato(String token)
+        public int NumerarTipoDato(String token)
         {
             String miToken = token.ToLower();
             switch (miToken)
             {
                 case "fecha":
-                    return 35;
+                    return 37;
                 case "cadena":
-                    return 32;
-                case "flotante":
-                    return 33;
-                case "entero":
                     return 34;
+                case "flotante":
+                    return 35;
+                case "entero":
+                    return 36;
             }
             return -1;
         }
